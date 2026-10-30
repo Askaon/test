@@ -141,3 +141,10 @@ fn android_main(app: winit::platform::android::activity::AndroidApp) {
         })),
         ..Default::default()
     };
+    eframe::run_native(
+        "Kalkulator",
+        opcje,
+        Box::new(|_cc| Ok(Box::new(Kalkulator::default()))),
+    )
+    .unwrap();
+}
