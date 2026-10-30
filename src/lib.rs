@@ -132,14 +132,12 @@ impl eframe::App for Kalkulator {
 #[cfg(target_os = "android")]
 #[no_mangle]
 fn android_main(app: winit::platform::android::activity::AndroidApp) {
+    use winit::platform::android::EventLoopBuilderExtAndroid;
+
     let opcje = eframe::NativeOptions {
-        android_app: Some(app),
+        // Przekazanie aplikacji Androida do pętli zdarzeń winit.
+        event_loop_builder: Some(Box::new(move |builder| {
+            builder.with_android_app(app);
+        })),
         ..Default::default()
     };
-    eframe::run_native(
-        "Kalkulator",
-        opcje,
-        Box::new(|_cc| Ok(Box::new(Kalkulator::default()))),
-    )
-    .unwrap();
-}
